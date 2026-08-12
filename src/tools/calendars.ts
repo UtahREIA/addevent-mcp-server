@@ -46,7 +46,7 @@ Error Handling:
     async (params: CreateCalendarInput) => {
       try {
         const calendar = await addEventRequest<AddEventCalendar>("/calendars", "POST", params);
-        const summary = `Created calendar "${calendar.title}" (calendar_id: ${calendar.calendar_id})`;
+        const summary = `Created calendar "${calendar.title}" (calendar_id: ${calendar.id})`;
         return {
           content: [{ type: "text" as const, text: `${summary}\n\n${formatJson(calendar, CHARACTER_LIMIT)}` }],
           structuredContent: calendar as unknown as Record<string, unknown>
@@ -110,7 +110,7 @@ Error Handling:
         const output = { calendars, count: calendars.length, page: params.page, page_size: params.page_size };
         const lines = [`Found ${calendars.length} calendar(s) on page ${params.page}:`, ""];
         for (const cal of calendars) {
-          lines.push(`- ${cal.title} (calendar_id: ${cal.calendar_id})`);
+          lines.push(`- ${cal.title} (calendar_id: ${cal.id})`);
         }
         lines.push("", formatJson(output, CHARACTER_LIMIT));
 

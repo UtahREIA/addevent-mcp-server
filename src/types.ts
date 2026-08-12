@@ -11,7 +11,7 @@ export type WeekdayBegin = "sunday" | "monday";
 export type AttendingStatus = "going" | "maybe" | "not-going";
 
 export interface AddEventEvent {
-  event_id: string;
+  id: string;
   calendar_id: string;
   title: string;
   datetime_start: string;
@@ -38,7 +38,7 @@ export interface AddEventEvent {
 }
 
 export interface AddEventCalendar {
-  calendar_id: string;
+  id: string;
   title: string;
   timezone?: string;
   weekday_begin?: WeekdayBegin;
@@ -54,7 +54,7 @@ export interface AddEventCalendar {
 }
 
 export interface AddEventRsvp {
-  attendee_id: string;
+  id: string;
   event_id: string;
   email: string;
   attending: AttendingStatus;
@@ -70,12 +70,11 @@ export interface AddEventTimezone {
 }
 
 // AddEvent's search endpoints wrap results in a resource-named array
-// property (e.g. "events", "rsvps"). The docs list "calendar" (singular)
-// as the array key for calendar search results, which is inconsistent
-// with the other two endpoints -- the client code in services/addevent-client.ts
-// reads defensively from a couple of possible key names so a documentation
-// typo doesn't silently break the tool. Verify against a live response and
-// simplify once confirmed.
+// property. Confirmed live: "events", "calendars", and "rsvps" are all
+// plural, matching the other two endpoints -- the AddEvent docs' mention
+// of a singular "calendar" key was simply wrong. src/format.ts's
+// extractArray() still checks both defensively, which is harmless now
+// that this is confirmed, so it's left as-is.
 export interface SearchMeta {
   page?: number;
   page_size?: number;

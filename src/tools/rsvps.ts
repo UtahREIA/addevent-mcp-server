@@ -51,7 +51,7 @@ Error Handling:
       try {
         const { event_id, ...body } = params;
         const rsvp = await addEventRequest<AddEventRsvp>(`/events/${encodeURIComponent(event_id)}/rsvps`, "POST", body);
-        const summary = `RSVP created for ${rsvp.email} on event ${event_id} (attendee_id: ${rsvp.attendee_id}, attending: ${rsvp.attending})`;
+        const summary = `RSVP created for ${rsvp.email} on event ${event_id} (attendee_id: ${rsvp.id}, attending: ${rsvp.attending})`;
         return {
           content: [{ type: "text" as const, text: `${summary}\n\n${formatJson(rsvp, CHARACTER_LIMIT)}` }],
           structuredContent: rsvp as unknown as Record<string, unknown>
@@ -114,7 +114,7 @@ Examples:
         const output = { rsvps, count: rsvps.length, page: params.page, page_size: params.page_size };
         const lines = [`Found ${rsvps.length} RSVP attendee(s) on page ${params.page}:`, ""];
         for (const rsvp of rsvps) {
-          lines.push(`- ${rsvp.email} - ${rsvp.attending} (attendee_id: ${rsvp.attendee_id}, event ${rsvp.event_id})`);
+          lines.push(`- ${rsvp.email} - ${rsvp.attending} (attendee_id: ${rsvp.id}, event ${rsvp.event_id})`);
         }
         lines.push("", formatJson(output, CHARACTER_LIMIT));
 

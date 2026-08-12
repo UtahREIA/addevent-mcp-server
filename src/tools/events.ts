@@ -50,7 +50,7 @@ Error Handling:
     async (params: CreateEventInput) => {
       try {
         const event = await addEventRequest<AddEventEvent>("/events", "POST", params);
-        const summary = `Created event "${event.title}" (event_id: ${event.event_id})` +
+        const summary = `Created event "${event.title}" (event_id: ${event.id})` +
           (event.landing_page_url ? `\n${event.landing_page_url}` : "");
         return {
           content: [{ type: "text" as const, text: `${summary}\n\n${formatJson(event, CHARACTER_LIMIT)}` }],
@@ -118,7 +118,7 @@ Error Handling:
         const output = { events, count: events.length, page: params.page, page_size: params.page_size };
         const lines = [`Found ${events.length} event(s) on page ${params.page}:`, ""];
         for (const ev of events) {
-          lines.push(`- ${ev.title} (event_id: ${ev.event_id}) - starts ${ev.datetime_start}${ev.calendar_id ? `, calendar ${ev.calendar_id}` : ""}`);
+          lines.push(`- ${ev.title} (event_id: ${ev.id}) - starts ${ev.datetime_start}${ev.calendar_id ? `, calendar ${ev.calendar_id}` : ""}`);
         }
         lines.push("", formatJson(output, CHARACTER_LIMIT));
 
