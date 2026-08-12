@@ -1,6 +1,11 @@
 node_modules
-.dist
+dist
 .DS_Store
 .env
 .env.*
+
+# The stdio entry point. It is not a serverless function -- it has no default
+# export and its top-level code connects to stdin/stdout. Keeping it out of the
+# deployment stops any framework auto-detection from turning it into a lambda
+# ("No exports found in module .../src/index.js"). Vercel uses api/mcp.ts.
 src/index.ts
