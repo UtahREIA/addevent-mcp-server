@@ -11,10 +11,13 @@
  *     transport locally before deploying.
  */
 
+import dotenv from "dotenv";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import express from "express";
 import { buildServer } from "./server.js";
+
+dotenv.config();
 
 function requireApiKey(): void {
   if (!process.env.ADDEVENT_API_KEY) {
